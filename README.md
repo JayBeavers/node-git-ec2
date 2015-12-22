@@ -20,8 +20,10 @@ https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/user-data
 Note: be sure to add a security group that exposes ports 80 & 443, the default security group exposes only port 22.
 
 * Wait for the website to finish initializing, including the post-setup scripts.
-You can log in via ssh and `tail -f /var/log/cloud-init-output.log` and watch for
-the completion of the scripts.
+You can log in via ssh to watch the completion of the scripts via:
+```
+tail -f /var/log/cloud-init-output.log
+```
 
 * Upload the node app via:
 ```
@@ -33,5 +35,4 @@ git push aws master
 ```
 forever list
 forever logs 0
-tail $HOME/app/forever.log
 ```
