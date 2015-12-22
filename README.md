@@ -16,7 +16,7 @@ if not specified.
 
 ```
 #include
-https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/scripts/user-data
+https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/user-data
 ```
 
 Note: be sure to add a security group that exposes ports 80 & 443, the default

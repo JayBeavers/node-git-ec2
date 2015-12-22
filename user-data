@@ -28,7 +28,7 @@ git init --bare
 
 # Create the auto-deploy post-update hook
 cd hooks
-wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/scripts/post-update
+wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/post-update
 chmod 755 post-update
 
 # Create the app directory to host the nodejs app files
