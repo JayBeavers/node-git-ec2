@@ -1,0 +1,11 @@
+#!/bin/bash
+
+forever stopall
+unset 'GIT_DIR'
+cd $HOME/app
+git fetch origin
+git pull origin master
+npm install
+forever start npm start >> $HOME/app/forever.log
+
+exec git update-server-info

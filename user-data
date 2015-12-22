@@ -1,0 +1,45 @@
+#!/bin/bash
+set -e -x
+
+# Add the NodeJS repository for 5.x
+# https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+apt-get install -y curl
+curl -sL https://deb.nodesource.com/setup_5.x | bash -
+
+# Upgrade the system
+export DEBIAN_FRONTEND=noninteractive
+apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
+
+apt-get install -y build-essential git-core nodejs
+
+# Install forever to keep nodejs app running
+npm install -g forever
+
+# Route ports 80 and 443 so we don't need to run nodejs as root
+iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
+iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 8000
+apt-get install iptables-persistent
+
+# Create the git repository for the Application
+# Note: this script is running as root, so ~ is not applicable
+mkdir /home/ubuntu/app.git
+cd /home/ubuntu/app.git
+git init --bare
+
+# Create the auto-deploy post-update hook
+cd hooks
+wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/scripts/post-update
+chmod 755 post-update
+
+# Create the app directory to host the nodejs app files
+cd /home/ubuntu
+git clone file:///home/ubuntu/app.git
+
+# Change ownership from root to ubuntu
+chown -R ubuntu:ubuntu app.git
+chown -R ubuntu:ubuntu app
+
+# Set up auto-start of website under the ubuntu account
+echo "@reboot cd $HOME/app && forever start npm start >> $HOME/app/forever.log" >> mycron
+crontab -u ubuntu mycron
+rm mycron
