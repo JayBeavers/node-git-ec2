@@ -40,6 +40,6 @@ chown -R ubuntu:ubuntu app.git
 chown -R ubuntu:ubuntu app
 
 # Set up auto-start of website under the ubuntu account
-echo "@reboot cd $HOME/app && forever start npm start >> $HOME/app/forever.log" >> mycron
+echo "@reboot forever start -c "npm start" $HOME/app" >> mycron
 crontab -u ubuntu mycron
 rm mycron

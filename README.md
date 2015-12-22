@@ -12,29 +12,24 @@ if not specified.
 
 ## Installation steps
 
-1.  Add the following as user-data to the instance launch when creating a new EC2 instance
-
+* Add the following as user-data to the instance launch when creating a new EC2 instance
 ```
 #include
 https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/user-data
 ```
+Note: be sure to add a security group that exposes ports 80 & 443, the default security group exposes only port 22.
 
-Note: be sure to add a security group that exposes ports 80 & 443, the default
-security group exposes only port 22.
-
-2.  Wait for the website to finish initializing, including the post-setup scripts.
+* Wait for the website to finish initializing, including the post-setup scripts.
 You can log in via ssh and `tail -f /var/log/cloud-init-output.log` and watch for
 the completion of the scripts.
 
-3.  Upload the node app via:
-
+* Upload the node app via:
 ```
 git remote add aws ubuntu@your-server-host:app.git
 git push aws master
 ```
 
-4.  Verify the app is running on the server using ssh:
-
+* Verify the app is running on the server using ssh:
 ```
 forever list
 forever logs 0

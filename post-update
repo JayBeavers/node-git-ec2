@@ -6,6 +6,6 @@ cd $HOME/app
 git fetch origin
 git pull origin master
 npm install
-forever start npm start >> $HOME/app/forever.log
+forever start -c "npm start" $HOME/app
 
 exec git update-server-info
