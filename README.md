@@ -33,6 +33,6 @@ git push aws master
 
 * Verify the app is running on the server using ssh:
 ```
-forever list
-forever logs 0
+initctl status nodeapp
+sudo cat /var/log/upstart/nodeapp.log
 ```

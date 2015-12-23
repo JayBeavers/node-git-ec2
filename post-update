@@ -1,11 +1,11 @@
 #!/bin/bash
 
-initctl stop nodeapp
+sudo initctl stop nodeapp
 unset 'GIT_DIR'
 cd $HOME/app
 git fetch origin
 git pull origin master
 npm install
-initctl start nodeapp
+sudo initctl start nodeapp
 
 exec git update-server-info
