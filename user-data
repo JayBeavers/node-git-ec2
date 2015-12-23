@@ -12,9 +12,6 @@ apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-conf
 
 apt-get install -y build-essential git-core nodejs
 
-# Install forever to keep nodejs app running
-npm install -g forever
-
 # Route ports 80 and 443 so we don't need to run nodejs as root
 iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
 iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 8000
@@ -40,6 +37,6 @@ chown -R ubuntu:ubuntu app.git
 chown -R ubuntu:ubuntu app
 
 # Set up auto-start of website under the ubuntu account
-echo "@reboot cd /home/ubuntu/app && forever start -c "npm start" ./" >> mycron
-crontab -u ubuntu mycron
-rm mycron
+npm install -g upstarter
+cd /home/ubuntu/app
+upstarter --no-ask -u ubuntu -n nodeapp -d "NodeJS App" -- npm start
