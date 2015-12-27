@@ -19,16 +19,16 @@ wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/network-se
 cd ~
 service procps start
 
-apt-get install fail2ban
+apt-get install -y fail2ban
 
 # Automatic unattended upgrades, per http://plusbryan.com/my-first-5-minutes-on-a-server-or-essential-security-for-linux-servers
-apt-get install unattended-upgrades
+apt-get install -y unattended-upgrades
 cd /etc/apt/apt.conf.d
 wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/unattended-upgrades/10periodic
 cd ~
 
 # logwatch settings, per http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/
-apt-get install logwatch
+apt-get install -y logwatch
 mkdir /var/cache/logwatch
 cp /usr/share/logwatch/default.conf/logwatch.conf /etc/logwatch/conf/
 rm /etc/cron.daily/00logwatch
@@ -37,7 +37,7 @@ wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/logwatch/0
 cd ~
 
 # Enable process accounting, from http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/
-apt-get install acct
+apt-get install -y acct
 cd /etc/cron.weekly/
 wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/acct/acct-report
 cd ~
