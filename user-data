@@ -6,10 +6,47 @@ set -e -x
 apt-get install -y curl
 curl -sL https://deb.nodesource.com/setup_5.x | bash -
 
-# Upgrade the system
+# Upgrade the system without prompts
+# http://askubuntu.com/questions/146921/how-do-i-apt-get-y-dist-upgrade-without-a-grub-config-prompt
 export DEBIAN_FRONTEND=noninteractive
 apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
 
+# Add additional network security parameters, per
+# http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/
+# suggested additions combined with default rules
+cd /etc/sysctl.d
+wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/network-security/10-network-security.conf
+cd ~
+service procps start
+
+apt-get install fail2ban
+
+# Automatic unattended upgrades, per http://plusbryan.com/my-first-5-minutes-on-a-server-or-essential-security-for-linux-servers
+apt-get install unattended-upgrades
+cd /etc/apt/apt.conf.d
+wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/unattended-upgrades/10periodic
+cd ~
+
+# logwatch settings, per http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/
+apt-get install logwatch
+mkdir /var/cache/logwatch
+cp /usr/share/logwatch/default.conf/logwatch.conf /etc/logwatch/conf/
+rm /etc/cron.daily/00logwatch
+cd /etc/cron.weekly/
+wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/logwatch/00logwatch
+cd ~
+
+# Enable process accounting, from http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/
+apt-get install acct
+cd /etc/cron.weekly/
+wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/acct/acct-report
+cd ~
+touch /var/log/wtmp
+
+# restrict su access, from http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/
+dpkg-statoverride --update --add root sudo 4750 /bin/su
+
+# Install C++ build tools, git, and NodeJS
 apt-get install -y build-essential git-core nodejs
 
 # Route ports 80 and 443 so we don't need to run nodejs as root
