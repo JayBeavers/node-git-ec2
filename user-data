@@ -28,11 +28,11 @@ apt-get install -y logwatch
 mkdir /var/cache/logwatch
 cp /usr/share/logwatch/default.conf/logwatch.conf /etc/logwatch/conf/
 rm /etc/cron.daily/00logwatch
-wget -O https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/logwatch/00logwatch -O /etc/cron.weekly/00logwatch
+wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/logwatch/00logwatch -O /etc/cron.weekly/00logwatch
 
 # Enable process accounting, from http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/
 apt-get install -y acct
-wget -O https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/acct/acct-report -O /etc/cron.weekly/acct-report
+wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/acct/acct-report -O /etc/cron.weekly/acct-report
 touch /var/log/wtmp
 
 # restrict su access, from http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/
