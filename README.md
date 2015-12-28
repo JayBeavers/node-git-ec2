@@ -39,8 +39,19 @@ git remote add aws ubuntu@your-server-host:app.git
 git push aws master
 ```
 
+* Add app secrets to environment variable by editing upstart job
+```
+sudo nano /etc/init/nodeapp.conf
+```
+
+```
+setuid ubuntu
+
+env APP_SECRET=keyboardcat
+```
+
 * Verify the app is running on the server using ssh:
 ```
 initctl status nodeapp
-sudo cat /var/log/upstart/nodeapp.log
+sudo tail -f /var/log/upstart/nodeapp.log
 ```
