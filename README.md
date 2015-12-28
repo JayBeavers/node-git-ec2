@@ -7,7 +7,7 @@ updated to use EC2's user-data deployment scripts.  These scripts are written fo
 Ubuntu 14.04 LTS.
 
 These scripts apply security settings for Ubuntu 14.04, based principally off the
-advice from advice from [Matt Brock](http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/)
+advice from [Matt Brock](http://blog.mattbrock.co.uk/hardening-the-security-on-ubuntu-server-14-04/)
 and [Bryan Kennedy](http://plusbryan.com/my-first-5-minutes-on-a-server-or-essential-security-for-linux-servers).
 
 The script uses Upstart to auto-start the NodeJS app upon boot and to restart the
