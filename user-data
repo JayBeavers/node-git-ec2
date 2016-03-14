@@ -19,10 +19,6 @@ service procps start
 
 apt-get install -y fail2ban
 
-# Remove root login via ssh
-sed -re 's/^(PermitRootLogin)([[:space:]]+)without-password/\1\2no/' -i.`date -I` /etc/ssh/sshd_config
-/etc/init.d/ssh restart
-
 # Automatic unattended upgrades, per http://plusbryan.com/my-first-5-minutes-on-a-server-or-essential-security-for-linux-servers
 apt-get install -y unattended-upgrades
 wget https://raw.githubusercontent.com/JayBeavers/node-git-ec2/master/unattended-upgrades/10periodic -O /etc/apt/apt.conf.d/10periodic
