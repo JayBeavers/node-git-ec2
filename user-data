@@ -68,3 +68,6 @@ chown -R ubuntu:ubuntu app
 npm install -g upstarter
 cd /home/ubuntu/app
 upstarter --no-ask -u ubuntu -n nodeapp -d "NodeJS App" -- npm start
+
+# Install unzip, useful when installing other packages like Ghost
+apt-get install -y unzip
